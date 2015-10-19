@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+        <title>百度云OS -- 玩机手册</title>
+        <style>
+            html, body {
+                height: 100%;
+            } 
+            .hide{
+                display: none;
+            }
+            ul {
+                list-style: none;
+            }
+            .header{
+                position: relative;
+                max-width: 640px;
+                overflow: hidden;
+                margin: 0px auto;
+                background-color: #0083ff;
+            }
+
+            #nav {
+                background-color:#85d989;
+                width:100%;
+                height:50px;
+            }
+            #content {
+                background-color:#cc85d9;
+                width:100%;
+                position:absolute;
+                top:50px;
+                bottom:0px;
+                left:0px;
+            }
+
+        </style>
+        <link rel="stylesheet" href="libs/css/common.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="libs/css/jquery.mobile-1.0.1.min.css">
+    </head>
+    <body>   
+        <div id='container' style="">
+        </div>
+        <script  type="text/template" id="banners_temp">
+            <div class="topbar">
+            <a class="title" >百度云os 玩机手册</div>
+            </div>          
+            <!--for BannersView-->
+            <div id='bannerswrapper'>
+            <div class="slide" id="slide3">
+            <ul>
+            <% _.each(banners, function(banner) {  %> 
+            <li>
+            <a href="#">
+            <img src="libs/imgs/banners/<%= banner.src %>"  alt="">
+            </a>
+            </li>                
+            <% });%>
+            </ul>
+            <div class="dot">                
+            <% _.each(banners, function(banner) {  %>
+            <span></span>
+            <% });%>
+            </div>
+            </div>    
+        </script>    
+
+        <script  type="text/template" id="mainmenu_temp">
+            <div id='mainmenu' class="line">
+            <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+            <% _.each(mainmu, function(menu) { %>
+            <li class=" ui-li-has-arrow ui-li ui-btn-up-c " data-theme="c" >
+            <a class="ui-link-inherit" href="<%= menu.link %>"><div class="ui-li">
+            <div class="ui-btn-text">
+            <i class="fa <%= menu.icon %>  fa-fw"></i><%= menu.title %>
+            </div>
+            <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+            </div></a>  
+            </li>
+            <% });%>
+            </ul>
+            </div>        
+        </script>
+        <!--home end------------------------------>
+        <!--QuickLink start------------------------------>
+        <script  type="text/template" id="quicklink_temp">
+            <!--for QuickLinkView-->             
+            <div id="quicklink" class='ulist'>
+            <dl class="topbar">
+                <a href="javascript:history.go(-1);" class="back"><dt><i class='fa fa-chevron-left'/><%=quicklink.title%></dt></a><a href="#" class="back"><i class="fa fa-home "></i></a>            
+                <dd></dd>
+            </dl>
+            <div id="quicklinkwrapper" class='ulist'>
+            <ul id="quicklink">
+            <% _.each(quicklink.main, function(item) { %>
+            <a href='#quicklink/<%= item.name %>'>
+            <li class='noborder title ui-btn-up-c'> 
+            <%= item.title %>
+            </li>
+            </a>
+            <% });%>
+            </ul>           
+            </div>
+            </div>
+        </script>        
+        <!--QuickLink end------------------------------>
+
+        <!--Faq start------------------------------>
+        <script  type="text/template" id="faq_temp">
+            <div id="faq" class='ulist'>
+            <section id="menu" class="current">
+            <dl class="topbar">
+            <a href="javascript:history.go(-1);" class="back"><dt><i class='fa fa-chevron-left'/><%=faq.title%></dt></a><a href="#" class="back"><i class="fa fa-home "></i></a>
+            <dd></dd>
+            </dl>
+            <ul id="questions" class="menu">
+            <% _.each(faq.main, function(item) { %>
+            <li class='noborder'>
+            <ul class='noborder'>
+            <li class="arrow title ui-btn-up-c">
+            <%= item.question %>
+            </li>
+            <li class="answer hide"><%= item.answer %></li>
+            </ul>
+            </li>
+            <% });%>
+            </ul>
+            </section>
+            </div>
+        </script>        
+        <!--Faq end------------------------------>
+        <!--FullList start------------------------------>
+        <script  type="text/template" id="fulllist_temp">
+            <!--for FullListView-->
+            <div id="fulllist" class='ulist'>
+            <dl class="topbar">
+            <a href="javascript:history.go(-1);" class="back"><dt><i class='fa fa-chevron-left'/><%=fulllist.title%></dt></a><a href="#" class="back"><i class="fa fa-home "></i></a>
+            <dd></dd>
+            </dl>
+            <% console.log(fulllist);%>
+            <div id="fulllistwrapper"  class='ulist'>
+            <ul id="fulllist" >
+            <% _.each(fulllist.main, function(item) { %> 
+            <dl class='noborder'>
+            <dt class='title arrow ui-btn-up-c'>
+            <i class="fa <%= item.icon %> fa-fw"></i><%= item.title %>
+            </dt>
+            <dd class="answer hide">
+            <% _.each(item.items, function(subitem){ %>
+            <a href = '#fulllist/<%=item.name%>/<%=subitem.name%>' >
+            <li>
+            <%=subitem.title%>                                
+            </li>
+            </a>
+            <% });%>
+            </dd>   
+            </dl>
+            <% });%>
+            </ul>           
+            </div>
+            </div>
+        </script> 
+
+        <!--FullList end------------------------------>
+
+        <!--ContentA start------------------------------>
+
+        <script  type="text/template" id="contenta_temp">
+            <!--for ContentAView-->
+        <div class='content' style='max-height:400px; overflow:hidden'>
+            <dl class="topbar">
+                <a href="javascript:history.go(-1);" class="back"><dt><i class="fa fa-chevron-left"></i><%=contenta.title%></dt></a><a href="#" class="back"><i class="fa fa-home "></i></a>
+                <dd></dd>
+            </dl>    
+            <div class="full  " style='width:100%;max-height:600px; overflow:hidden'>
+                <ul>            
+                    <% _.each(contenta.main, function(item) { %>
+                    <li>
+                        <img src='libs/imgs/contents/<%= item.src %>'>
+                        <h3><%= item.title %></h3>
+                        <P><%= item.content %></P>
+                    </li>                
+                    <% });%>
+                </ul>
+                <div class="dot">
+                    <% _.each(contenta.main, function(item) { %>
+                    <span class=""></span>
+                    <% });%>
+                </div>
+            </div>
+        </div>
+        </script>        
+        <!--ContentA end------------------------------>        
+
+        <!--ContentC start------------------------------>
+        <script  type="text/template" id="contentc_temp">
+            <!--for CntentCView-->            
+        <div class='content' style='max-height:400px; overflow:hidden'>
+            <dl class="topbar">
+                <a href="javascript:history.go(-1);" class="back"><dt><i class="fa fa-chevron-left"></i><%=contentc.title%></dt></a><a href="#" class="back"><i class="fa fa-home "></i></a>
+                <dd></dd>
+            </dl>    
+            <div class="full  " style='width:100%;max-height:600px; overflow:hidden'>
+                <ul>            
+                    <% _.each(contentc.main, function(item) { %>
+                    <li>
+                        <img src='libs/imgs/contents/<%= item.img %>'>
+                        <h3><%= item.title %></h3>
+                        <P><%= item.description %></P>
+                    </li>                
+                    <% });%>
+                </ul>
+                <div class="dot">
+                    <% _.each(contentc.main, function(item) { %>
+                    <span class=""></span>
+                    <% });%>
+                </div>
+            </div>
+        </div>
+        </script>        
+        <!--ContentC end------------------------------> 
+
+        <!--Contact Us start--------------------------->
+        <script  type="text/template" id="contactus_temp">
+            <!--for QuickLinkView-->             
+            <div id="contactus" class='content'>
+            <dl class="topbar">
+            <a href="javascript:history.go(-1);" class="back"><dt><i class='fa fa-chevron-left'/>联系我们</dt></a>
+            <dd></dd>
+            </dl>
+            <div class='mainarea'>
+            <dl>
+            <dt>微信： BD_ROM</dt>
+            <dd>
+            <img src='libs/imgs/icons/baiduyunosweixin.png'/>
+            </dd>
+            </dl>
+            <dl>
+            <dt>新浪微薄： 百度云OS</dt>
+            <dd><a href='http://e.weibo.com/baiduyunznzdpt'>http://e.weibo.com/baiduyunznzdpt</a></dd>
+            </dl>
+            <dl>
+            <dt>百度云OS官网：</dt>
+            <dd><a href='http://os.baidu.com'>http://os.baidu.com</a></dd>
+            </dl>
+            <dl>
+            <dt>百度云OS论坛：</dt>
+            <dd><a href="http://bbs.os.baidu.com">http://bbs.os.baidu.com</a></dd>
+            </dl>
+            <dl>
+            <dt>百度云OS吧：</dt>
+            <dd><a href="http://tieba.baidu.com/f?ie=utf-8&kw=百度云os">http://tieba.baidu.com/f?ie=utf-8&kw=百度云os</a></dd>
+            </dl>
+            </div>
+            </div>
+        </script>        
+        <!--Contact us end------------------------------> 
+
+        <!-------------------->
+
+        <script src="libs/js/zepto.min.js"></script>
+        <script src="http://libs.baidu.com/json/json2/json2.js"></script>
+        <script src="libs/js/book.js"></script>
+        <script src="libs/js/swipeSlide.min.js"></script>
+        <script src="http://libs.baidu.com/underscore/1.3.3/underscore-min.js"></script>
+        <script src="http://libs.baidu.com/backbone/0.9.2/backbone.js"></script>
+        <!--        <script src="libs/js/backbone-1.1.0-min.js"></script>-->
+        <script src="libs/js/index.js"></script> 
+    </body>
+</html>
